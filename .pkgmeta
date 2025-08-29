@@ -1,0 +1,6 @@
+package-as: BetterBags_iLvl
+
+ignore:
+  - .github
+  - .gitignore
+  - .pkgmeta
