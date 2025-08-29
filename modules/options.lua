@@ -49,7 +49,7 @@ addon.options = function()
                 config.configFrame:AddSlider({
                     title = L["OPTIONS_THRESHOLD"]:gsub("_default_", addon.vars.defaultThreshold),
                     min = 1,
-                    max = addon.vars.maximumThreshold,
+                    max = tonumber(addon.vars.maximumThreshold),
                     step = 1,
                     id = "ilvl_threshold",
                     getValue = function(_)
