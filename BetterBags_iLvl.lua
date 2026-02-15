@@ -23,8 +23,8 @@ local context = BetterBags:GetModule('Context')
 addon.context = context:New(L["CATEGORY_NAME"] .. "_Event")
 
 -- Default values, set to current season dungeon ilvl and max MM ilvl
-local defaultThreshold = "639"
-local maximumThreshold = "723"
+local defaultThreshold = "95"
+local maximumThreshold = "169"
 
 if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
     defaultThreshold = "60"
@@ -82,7 +82,7 @@ function addon:OnReady()
     categories:WipeCategory(addon.context:Copy(), L["CATEGORY_NAME"])
 
     -- Add addon config to BetterBags
-    config:AddPluginConfig(L["CATEGORY_NAME"], addon.options())
+    config:AddPluginConfig(L["CATEGORY_NAME"], addon.options)
 
     -- Create addon category if it doesn't already exist
     local categoryAlreadyExists = categories:GetCategoryByName(L["CATEGORY_NAME"])

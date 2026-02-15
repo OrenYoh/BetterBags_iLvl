@@ -18,7 +18,6 @@ local events = BetterBags:GetModule('Events')
 
 local thresholdError = false
 local debounceTimer
-local refreshButton
 
 local updateSavedVariables = function()
     BetterBags_iLvlDB = addon.db
@@ -34,59 +33,52 @@ local function refreshCategory(context)
         updateSavedVariables()
         categories:WipeCategory(L["CATEGORY_NAME"])
         events:SendMessage(context, 'bags/FullRefreshAll')
-        refreshButton:Enable()
     end)
 end
 
 --- Options panel
 -----------------------------
-addon.options = function()
-    return {
-        iLvlOptions = {
-            name = function()
-                addon.frame:CreateDescription(L["OPTIONS_DESC"], { top = 20 })
+addon.options = {
+    a = {
+        name = function()
+            config.configFrame.layout:AddInlineSubSection({
+                title = L["CATEGORY_NAME"],
+                description = L["OPTIONS_DESC"],
+            })
+        end
+    },
+    b = {
+        name = function()
+            addon.frame:CreateDescription(L["OPTIONS_DESC"])
 
-                config.configFrame:AddSlider({
-                    title = L["OPTIONS_THRESHOLD"]:gsub("_default_", addon.vars.defaultThreshold),
-                    min = 1,
-                    max = tonumber(addon.vars.maximumThreshold),
-                    step = 1,
-                    id = "ilvl_threshold",
-                    getValue = function(_)
-                        return addon.db.threshold
-                    end,
-                    setValue = function(ctx, value)
-                        if (tonumber(value)) then
-                            thresholdError = false
-                            addon.db.threshold = tostring(value)
-                            refreshCategory(ctx)
-                        else
-                            thresholdError = true
-                        end
-                    end,
-                })
-
-                addon.frame:CreateCheckbox({
-                    title = L["OPTIONS_INCLUDE_JUNK"],
-                    getValue = function(_)
-                        return addon.db.includeJunk
-                    end,
-                    setValue = function(ctx, value)
-                        addon.db.includeJunk = value
+            config.configFrame.layout:AddSlider({
+                title = L["OPTIONS_THRESHOLD"]:gsub("_default_", addon.vars.defaultThreshold),
+                min = 1,
+                max = tonumber(addon.vars.maximumThreshold),
+                step = 1,
+                id = "ilvl_threshold",
+                getValue = function(_)
+                    return addon.db.threshold
+                end,
+                setValue = function(ctx, value)
+                    if (tonumber(value)) then
+                        thresholdError = false
+                        addon.db.threshold = tostring(value)
                         refreshCategory(ctx)
+                    else
+                        thresholdError = true
                     end
-                })
-
-                refreshButton = addon.frame:CreateButton({
-                    title = L["OPTIONS_REFRESH"],
-                    align = "CENTER",
-                    disabled = true,
-                    onClick = function()
-                        refreshButton:Disable()
-                        ConsoleExec("reloadui")
-                    end
-                })
-            end
-        }
-    }
-end
+                end,
+            })
+        end
+    },
+    c = {
+        type = "toggle",
+        name = L["OPTIONS_INCLUDE_JUNK"],
+        get = function() return addon.db.includeJunk end,
+        set = function(_, value)
+            addon.db.includeJunk = value
+            refreshCategory(ctx)
+        end
+    },
+}
