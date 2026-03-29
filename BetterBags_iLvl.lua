@@ -23,8 +23,8 @@ local context = BetterBags:GetModule('Context')
 addon.context = context:New(L["CATEGORY_NAME"] .. "_Event")
 
 -- Default values, set to current season dungeon ilvl and max MM ilvl
-local defaultThreshold = "95"
-local maximumThreshold = "169"
+local defaultThreshold = "139"
+local maximumThreshold = "288"
 
 if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
     defaultThreshold = "60"
