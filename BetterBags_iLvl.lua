@@ -24,7 +24,7 @@ addon.context = context:New(L["CATEGORY_NAME"] .. "_Event")
 
 -- Default values, set to current season dungeon ilvl and max MM ilvl
 local defaultThreshold = "139"
-local maximumThreshold = "288"
+local maximumThreshold = "298"
 
 if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
     defaultThreshold = "60"
