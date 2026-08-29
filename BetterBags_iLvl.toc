@@ -1,9 +1,9 @@
-## Interface: 120007, 50504, 40402, 30405, 20508, 11508
+## Interface: 120100, 50504, 40402, 38002, 30405, 20506, 11509
 ## Title: BetterBags - iLvl
 ## Category: Inventory
 ## Notes: Adds an iLvl filter to BetterBags.
 ## Author: OrenYoh
-## Version: 2.3.2
+## Version: 2.4.0
 ## IconTexture: Interface\AddOns\BetterBags_iLvl\images\ilvl
 ## Dependencies: BetterBags
 ## OptionalDeps: BetterBags_Tabards, BetterBags_Legendary

@@ -76,7 +76,7 @@ addon.options = {
         type = "toggle",
         name = L["OPTIONS_INCLUDE_JUNK"],
         get = function() return addon.db.includeJunk end,
-        set = function(_, value)
+        set = function(ctx, value)
             addon.db.includeJunk = value
             refreshCategory(ctx)
         end
