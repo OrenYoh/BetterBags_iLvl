@@ -175,3 +175,16 @@ addon.options = {
         end
     },
 }
+
+if addon.vars.isRetail then
+    addon.options.d = {
+        type = "toggle",
+        name = L["OPTIONS_USE_MAX_ILVL"],
+        desc = L["OPTIONS_USE_MAX_ILVL_DESC"],
+        get = function() return addon.db.useMaxItemLevel end,
+        set = function(ctx, value)
+            addon.db.useMaxItemLevel = value
+            refreshCategory(ctx)
+        end
+    }
+end

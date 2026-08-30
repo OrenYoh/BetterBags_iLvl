@@ -18,3 +18,5 @@ L["OPTIONS_DYNAMIC_TOGGLE_ACTIVE"] = "Use a dynamic threshold based on your aver
 L["OPTIONS_DYNAMIC_TOGGLE_DESC"] = "When enabled, the iLvl threshold is calculated automatically from your average equipped item level. It is recalculated whenever you change the settings here, and again each time you log in or reload your UI; it never changes automatically while you are playing.";
 L["OPTIONS_DYNAMIC_OFFSET"] = "iLvl difference below your average (default: _default_)";
 L["OPTIONS_DYNAMIC_OFFSET_DESC"] = "Items whose iLvl is more than this amount below your average equipped item level will be placed in this category.";
+L["OPTIONS_USE_MAX_ILVL"] = "Use each item's maximum possible iLvl (if upgradable) instead of its current iLvl";
+L["OPTIONS_USE_MAX_ILVL_DESC"] = "When enabled, items that can still be upgraded are compared using the iLvl they could reach at maximum upgrade, not their current iLvl. Items that aren't upgradable are unaffected.";

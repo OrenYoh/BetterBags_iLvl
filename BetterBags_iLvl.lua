@@ -53,6 +53,7 @@ addon.db = {
     includeJunk = true,
     useDynamicThreshold = false,
     dynamicOffset = defaultDynamicOffset,
+    useMaxItemLevel = false,
 }
 
 addon.vars = {

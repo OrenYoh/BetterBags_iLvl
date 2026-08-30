@@ -17,3 +17,5 @@ L["OPTIONS_DYNAMIC_TOGGLE_ACTIVE"] = "Utiliser un seuil dynamique basé sur votr
 L["OPTIONS_DYNAMIC_TOGGLE_DESC"] = "Une fois activé, le seuil d'iLvl est calculé automatiquement à partir de votre iLvl moyen équipé. Il est recalculé à chaque modification de ces réglages, ainsi qu'à la connexion ou lors d'un rechargement de l'interface ; il ne change jamais automatiquement en cours de jeu.";
 L["OPTIONS_DYNAMIC_OFFSET"] = "Écart d'iLvl sous votre moyenne (par défaut : _default_)";
 L["OPTIONS_DYNAMIC_OFFSET_DESC"] = "Les objets dont l'iLvl est inférieur de plus de cette valeur à votre iLvl moyen équipé seront placés dans cette catégorie.";
+L["OPTIONS_USE_MAX_ILVL"] = "Utiliser l'iLvl maximum possible de chaque objet (si améliorable) plutôt que son iLvl actuel";
+L["OPTIONS_USE_MAX_ILVL_DESC"] = "Une fois activé, les objets encore améliorables sont comparés selon l'iLvl qu'ils pourraient atteindre au maximum d'amélioration, et non leur iLvl actuel. Les objets non améliorables ne sont pas concernés.";

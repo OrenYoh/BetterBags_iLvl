@@ -17,6 +17,28 @@ local L = root.L;
 local BetterBagsPriority = LibStub('AceAddon-3.0'):GetAddon("BetterBags_Priority", true)
 local priorityEnabled = BetterBagsPriority ~= nil or false
 
+-- C_Item.GetItemUpgradeInfo's own maxItemLevel field has been observed
+-- coming back as 0 (a populated but bogus value) even when currentLevel/
+-- maxLevel are correct, so we derive the max iLvl ourselves instead: each
+-- remaining upgrade level adds a fixed +3 iLvl.
+local ITEM_LEVEL_PER_UPGRADE_LEVEL = 3
+
+-- Returns the item's max possible iLvl (fully upgraded) when the option is
+-- enabled and the item can still be upgraded, falling back to its current
+-- iLvl otherwise (also covers Classic clients, where this API is absent).
+--@param itemInfo ItemInfo
+local function getComparedItemLevel(itemInfo)
+    if BetterBags_iLvlDB.useMaxItemLevel and C_Item.GetItemUpgradeInfo then
+        local upgradeInfo = C_Item.GetItemUpgradeInfo(itemInfo.itemLink)
+        if upgradeInfo and upgradeInfo.maxLevel and upgradeInfo.currentLevel then
+            local remainingLevels = upgradeInfo.maxLevel - upgradeInfo.currentLevel
+            return itemInfo.currentItemLevel + (remainingLevels * ITEM_LEVEL_PER_UPGRADE_LEVEL)
+        end
+    end
+
+    return itemInfo.currentItemLevel
+end
+
 -- If the priority addon is available, we register the custom category as an empty filter with BetterBags to keep the
 -- "enable system" working. The actual filtering will be done by the priority addon
 if (priorityEnabled) then
@@ -30,7 +52,7 @@ if (priorityEnabled) then
     --@param data ItemData
     categoriesWithPriority:RegisterCategoryFunction(L["CATEGORY_NAME"], "iLvlCategoryFilter", function(data)
         if (data.itemInfo.classID == Enum.ItemClass.Armor or data.itemInfo.classID == Enum.ItemClass.Weapon) then
-            local ilvl = data.itemInfo.currentItemLevel
+            local ilvl = getComparedItemLevel(data.itemInfo)
 
             if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or BetterBags_iLvlDB.defaultThreshold)) then
                 return L["CATEGORY_NAME"]
@@ -58,7 +80,7 @@ else
                 return nil
             end
 
-            local ilvl = data.itemInfo.currentItemLevel
+            local ilvl = getComparedItemLevel(data.itemInfo)
 
             if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or BetterBags_iLvlDB.defaultThreshold)) then
                 return L["CATEGORY_NAME"]

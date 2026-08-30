@@ -19,3 +19,5 @@ L["OPTIONS_DYNAMIC_TOGGLE_ACTIVE"] = "使用基於平均裝備 iLvl 的動態界
 L["OPTIONS_DYNAMIC_TOGGLE_DESC"] = "啟用後，物品等級界線將根據您的平均裝備物品等級自動計算。每次修改此處設定時都會重新計算，登入或重新載入介面時也會重新計算；遊戲過程中不會自動變動。";
 L["OPTIONS_DYNAMIC_OFFSET"] = "低於平均值的物品等級差（預設: _default_）";
 L["OPTIONS_DYNAMIC_OFFSET_DESC"] = "物品等級低於您平均裝備物品等級此數值以上的物品，將被放置在此分類中。";
+L["OPTIONS_USE_MAX_ILVL"] = "使用物品可達到的最大 iLvl（若可升級）而非目前 iLvl";
+L["OPTIONS_USE_MAX_ILVL_DESC"] = "啟用後，仍可升級的物品將依其升級到最高等級後可達到的 iLvl 進行比較，而非目前 iLvl。不可升級的物品不受影響。";
