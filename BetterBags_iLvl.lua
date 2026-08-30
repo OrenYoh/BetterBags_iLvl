@@ -43,14 +43,23 @@ elseif (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MISTS_CLASSIC) then
     maximumThreshold = "509"
 end
 
+-- Dynamic threshold is only supported on the current retail client, since it
+-- relies on GetAverageItemLevel and hasn't been verified on Classic clients.
+local isRetail = (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE)
+local defaultDynamicOffset = "20"
+
 addon.db = {
     threshold = defaultThreshold,
     includeJunk = true,
+    useDynamicThreshold = false,
+    dynamicOffset = defaultDynamicOffset,
 }
 
 addon.vars = {
     defaultThreshold = defaultThreshold,
     maximumThreshold = maximumThreshold,
+    defaultDynamicOffset = defaultDynamicOffset,
+    isRetail = isRetail,
 }
 -----------------------------
 
@@ -58,14 +67,54 @@ addon.vars = {
 -----------------------------
 addon.eventFrame = CreateFrame("Frame", addonName .. "EventFrame", UIParent)
 addon.eventFrame:RegisterEvent("ADDON_LOADED")
+addon.eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 addon.eventFrame:SetScript("OnEvent", function(_, event, ...)
 	if event == "ADDON_LOADED" then
         local name = ...;
         if name == addonName then
             addon:OnReady()
         end
+    elseif event == "PLAYER_ENTERING_WORLD" then
+        local isInitialLogin, isReloadingUi = ...;
+        if isInitialLogin or isReloadingUi then
+            addon:UpdateDynamicThreshold()
+        end
     end
 end)
+
+-- Pure calculation, no side effects: returns the threshold implied by the
+-- player's current average equipped item level, or nil if unavailable.
+function addon:CalculateDynamicThreshold()
+    if not addon.vars.isRetail then return nil end
+    if not _G.GetAverageItemLevel then return nil end
+
+    local _, avgItemLevelEquipped = _G.GetAverageItemLevel()
+    if not avgItemLevelEquipped or avgItemLevelEquipped <= 0 then return nil end
+
+    local offset = tonumber(addon.db.dynamicOffset) or tonumber(addon.vars.defaultDynamicOffset)
+    return tostring(math.max(1, math.floor(avgItemLevelEquipped - offset)))
+end
+
+-- Recompute the iLvl threshold and store it directly into addon.db.threshold
+-- (the same variable the manual slider reads/writes), so that disabling the
+-- dynamic option leaves the threshold already set to its last dynamic value.
+-- Called passively on login/reload (see PLAYER_ENTERING_WORLD handler above)
+-- and actively from the options panel whenever the player enables the
+-- dynamic option or edits its offset; it never runs on its own mid-session.
+function addon:UpdateDynamicThreshold()
+    if not addon.db.useDynamicThreshold then return end
+
+    local newThreshold = addon:CalculateDynamicThreshold()
+    if not newThreshold or newThreshold == addon.db.threshold then return end
+
+    addon.db.threshold = newThreshold
+    if addon.refreshCategory then
+        addon.refreshCategory(addon.context:Copy())
+    end
+    if addon.updateThresholdControls then
+        addon.updateThresholdControls()
+    end
+end
 
 function addon:OnReady()
     if (type(BetterBags_iLvlDB) ~= "table") then BetterBags_iLvlDB = {} end
