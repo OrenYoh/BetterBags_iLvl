@@ -16,6 +16,12 @@ i18n\enUS.lua
 i18n\frFR.lua
 i18n\zhTW.lua
 i18n\zhCN.lua
+i18n\deDE.lua
+i18n\esES.lua
+i18n\esMX.lua
+i18n\itIT.lua
+i18n\koKR.lua
+i18n\ptBR.lua
 
 # Main
 BetterBags_iLvl.lua
