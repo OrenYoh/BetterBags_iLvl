@@ -26,7 +26,10 @@ addon.context = context:New(L["CATEGORY_NAME"] .. "_Event")
 local defaultThreshold = "214"
 local maximumThreshold = "344"
 
-if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
+if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE) then
+    defaultThreshold = "60"
+    maximumThreshold = "100"
+elseif (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
     defaultThreshold = "60"
     maximumThreshold = "100"
 elseif (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_BURNING_CRUSADE_CLASSIC) then
