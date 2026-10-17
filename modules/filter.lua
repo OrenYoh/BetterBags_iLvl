@@ -3,15 +3,12 @@ local BetterBags = LibStub('AceAddon-3.0'):GetAddon("BetterBags")
 
 ---@class Categories: AceModule
 local categories = BetterBags:GetModule('Categories')
----@class Config: AceModule
-local config = BetterBags:GetModule('Config')
----@class Events: AceModule
-local events = BetterBags:GetModule('Events')
----@class Items: AceModule
-local items = BetterBags:GetModule('Items')
 
 local addonName, root = ...;
 local L = root.L;
+
+---@class BetterBags_iLvl: AceModule
+local addon = LibStub('AceAddon-3.0'):GetAddon(addonName)
 
 -- Check if the priority addon is available
 local BetterBagsPriority = LibStub('AceAddon-3.0'):GetAddon("BetterBags_Priority", true)
@@ -54,7 +51,7 @@ if (priorityEnabled) then
         if (data.itemInfo.classID == Enum.ItemClass.Armor or data.itemInfo.classID == Enum.ItemClass.Weapon) then
             local ilvl = getComparedItemLevel(data.itemInfo)
 
-            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or BetterBags_iLvlDB.defaultThreshold)) then
+            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
                 return L["CATEGORY_NAME"]
             end
         end
@@ -82,7 +79,7 @@ else
 
             local ilvl = getComparedItemLevel(data.itemInfo)
 
-            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or BetterBags_iLvlDB.defaultThreshold)) then
+            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
                 return L["CATEGORY_NAME"]
             end
         end

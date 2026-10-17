@@ -1,9 +1,9 @@
-## Interface: 120100, 50504, 40402, 38002, 30405, 20506, 16001, 11509
+## Interface: 120105, 50504, 40402, 38002, 30405, 20506, 16001, 11509
 ## Title: BetterBags - iLvl
 ## Category: Inventory
 ## Notes: Adds an iLvl filter to BetterBags.
 ## Author: OrenYoh
-## Version: 2.7.1
+## Version: 2.8.0
 ## IconTexture: Interface\AddOns\BetterBags_iLvl\images\ilvl
 ## Dependencies: BetterBags
 ## OptionalDeps: BetterBags_Tabards, BetterBags_Legendary
@@ -25,10 +25,6 @@ i18n\ptBR.lua
 
 # Main
 BetterBags_iLvl.lua
-
-# Core
-core/config.lua
-core/frame.lua
 
 # Modules
 modules/filter.lua

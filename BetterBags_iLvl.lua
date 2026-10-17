@@ -2,7 +2,7 @@ local addonName, root = ...;
 local L = root.L;
 local _G = _G
 
----@class BetterBags_Legendary: AceModule
+---@class BetterBags_iLvl: AceModule
 local addon = LibStub("AceAddon-3.0"):NewAddon(root, addonName, 'AceHook-3.0')
 
 --- BetterBags dependencies
