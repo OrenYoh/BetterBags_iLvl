@@ -25,6 +25,12 @@ local ITEM_LEVEL_PER_UPGRADE_LEVEL = 3
 -- iLvl otherwise (also covers Classic clients, where this API is absent).
 --@param itemInfo ItemInfo
 local function getComparedItemLevel(itemInfo)
+    -- Item data may not be loaded yet (e.g. BetterBags Next's vendor panel),
+    -- in which case currentItemLevel is nil.
+    if itemInfo.currentItemLevel == nil then
+        return nil
+    end
+
     if BetterBags_iLvlDB.useMaxItemLevel and C_Item.GetItemUpgradeInfo then
         local upgradeInfo = C_Item.GetItemUpgradeInfo(itemInfo.itemLink)
         if upgradeInfo and upgradeInfo.maxLevel and upgradeInfo.currentLevel then
@@ -51,7 +57,7 @@ if (priorityEnabled) then
         if (data.itemInfo.classID == Enum.ItemClass.Armor or data.itemInfo.classID == Enum.ItemClass.Weapon) then
             local ilvl = getComparedItemLevel(data.itemInfo)
 
-            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
+            if (ilvl and ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
                 return L["CATEGORY_NAME"]
             end
         end
@@ -79,7 +85,7 @@ else
 
             local ilvl = getComparedItemLevel(data.itemInfo)
 
-            if (ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
+            if (ilvl and ilvl < (tonumber(BetterBags_iLvlDB.threshold) or tonumber(addon.vars.defaultThreshold))) then
                 return L["CATEGORY_NAME"]
             end
         end
