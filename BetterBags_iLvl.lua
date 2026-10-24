@@ -26,7 +26,11 @@ addon.context = context:New(L["CATEGORY_NAME"] .. "_Event")
 local defaultThreshold = "214"
 local maximumThreshold = "344"
 
-if (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_MAINLINE) then
+-- WoW: Forever has its own project ID (WOW_PROJECT_CAMELOT, only defined on that client).
+-- Retail (WOW_PROJECT_MAINLINE) keeps the default values above.
+local isForever = _G.WOW_PROJECT_CAMELOT ~= nil and _G.WOW_PROJECT_ID == _G.WOW_PROJECT_CAMELOT
+
+if isForever then
     defaultThreshold = "60"
     maximumThreshold = "100"
 elseif (_G.WOW_PROJECT_ID == _G.WOW_PROJECT_CLASSIC) then
@@ -115,9 +119,6 @@ function addon:UpdateDynamicThreshold()
     if addon.refreshCategory then
         addon.refreshCategory(addon.context:Copy())
     end
-    if addon.updateThresholdControls then
-        addon.updateThresholdControls()
-    end
 end
 
 function addon:OnReady()
@@ -141,7 +142,7 @@ function addon:OnReady()
     local categoryAlreadyExists = categories:GetCategoryByName(L["CATEGORY_NAME"])
 
     if not categoryAlreadyExists then
-        categories:CreateCategory({
+        categories:CreateCategory(addon.context:Copy(), {
             name = L["CATEGORY_NAME"],
             save = true,
             itemList = {},
