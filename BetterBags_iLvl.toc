@@ -3,7 +3,7 @@
 ## Category: Inventory
 ## Notes: Adds an iLvl filter to BetterBags.
 ## Author: OrenYoh
-## Version: 2.9.1
+## Version: 2.10.0
 ## IconTexture: Interface\AddOns\BetterBags_iLvl\images\ilvl.png
 ## Dependencies: BetterBags
 ## OptionalDeps: BetterBags_Tabards, BetterBags_Legendary
@@ -22,6 +22,7 @@ i18n\esMX.lua
 i18n\itIT.lua
 i18n\koKR.lua
 i18n\ptBR.lua
+i18n\ruRU.lua
 
 # Main
 BetterBags_iLvl.lua
